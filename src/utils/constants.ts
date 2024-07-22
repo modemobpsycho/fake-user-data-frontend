@@ -1,5 +1,5 @@
 export const constants = {
-	API_URL: 'http://localhost:5000/api',
+	API_URL: 'https://itra-task-5-backend.vercel.app/api',
 	SEED: 'seed',
 	REGION: 'region',
 	MISTAKES_NUM: 'mistakes_num',
