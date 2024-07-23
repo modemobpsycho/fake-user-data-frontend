@@ -14,18 +14,36 @@ function Table() {
 	)
 
 	useEffect(() => {
-		window.addEventListener('scroll', scrollHandler)
-		return () => window.removeEventListener('scroll', scrollHandler)
+		window.addEventListener('scroll', throttle(scrollHandler, 500))
+		window.addEventListener('resize', throttle(scrollHandler, 500))
+		return () => {
+			window.removeEventListener('scroll', throttle(scrollHandler, 500))
+			window.removeEventListener('resize', throttle(scrollHandler, 500))
+		}
 	}, [])
 
+	function throttle(callee, timeout) {
+		let timer = null
+
+		return function perform(...args) {
+			if (timer) return
+
+			timer = setTimeout(() => {
+				callee(...args)
+
+				clearTimeout(timer)
+				timer = null
+			}, timeout)
+		}
+	}
+
 	async function scrollHandler() {
-		const table = document.getElementById('table-persons') as HTMLTableElement
+		const height = document.body.offsetHeight
+		const screenHeight = window.innerHeight
+		const scrolled = window.scrollY
 
-		const { offsetHeight } = table
-		const { innerHeight, scrollY } = window
-
-		const threshold = offsetHeight - innerHeight / 8
-		const position = scrollY + innerHeight
+		const threshold = height - screenHeight / 3
+		const position = scrolled + screenHeight
 
 		if (position >= threshold) {
 			incPage()

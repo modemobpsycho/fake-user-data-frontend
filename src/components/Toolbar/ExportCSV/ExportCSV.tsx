@@ -3,11 +3,11 @@ import { usePersonStore } from '../../../stores/personStore'
 import Button from '@mui/material/Button'
 
 function ExportCSV() {
-	const { persons } = usePersonStore(state => state)
+	const { personsMistakes } = usePersonStore(state => state)
 	return (
 		<Button variant='contained' sx={{ mr: '0.5rem' }}>
 			<CSVLink
-				data={persons}
+				data={personsMistakes}
 				filename='persons.csv'
 				style={{ textDecoration: 'none', color: 'white' }}
 			>

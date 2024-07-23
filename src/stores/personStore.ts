@@ -19,11 +19,17 @@ interface PersonState {
 	page: number
 	resetPage: () => void
 	incPage: () => void
+	isFetching: boolean
+	shouldLoad: boolean
+	setIsFetching: (isFetching: boolean) => void
 }
 
 export const usePersonStore = create<PersonState>((set, get) => ({
 	persons: [],
 	setPersons: async () => {
+		if (get().isFetching || !get().shouldLoad) return
+
+		get().setIsFetching(true)
 		try {
 			const { data } = await axios.get(constants.API_URL + '/users', {
 				params: {
@@ -34,11 +40,12 @@ export const usePersonStore = create<PersonState>((set, get) => ({
 					page: get().page,
 				},
 			})
-
 			set(state => ({
 				persons: state.persons.concat(data),
 				personsMistakes: state.personsMistakes.concat(data),
 			}))
+
+			get().setIsFetching(false)
 		} catch (error) {
 			alert(error)
 		}
@@ -141,5 +148,10 @@ export const usePersonStore = create<PersonState>((set, get) => ({
 	},
 	incPage: () => {
 		set({ page: get().page + 1 })
+	},
+	isFetching: false,
+	shouldLoad: true,
+	setIsFetching: (isFetching: boolean) => {
+		set({ isFetching: isFetching })
 	},
 }))
