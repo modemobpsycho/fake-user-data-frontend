@@ -2,14 +2,9 @@ import { InputLabel, MenuItem, Select } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import { constants } from '../../../utils/constants'
 import { usePersonStore } from '../../../stores/personStore'
-import { useEffect } from 'react'
 
 function SelectCountry() {
-	const { region, setRegion, setNewPersons } = usePersonStore(state => state)
-
-	useEffect(() => {
-		setNewPersons()
-	}, [region])
+	const { region, setRegion } = usePersonStore(state => state)
 
 	return (
 		<div className='div-select-country'>

@@ -9,45 +9,55 @@ import { usePersonStore } from '../../stores/personStore'
 import { useEffect } from 'react'
 
 function Table() {
-	const { setPersons, incPage, personsMistakes } = usePersonStore(
-		state => state
-	)
+	const {
+		setPersons,
+		incPage,
+		personsMistakes,
+		setIsFetching,
+		isFetching,
+		setNewPersons,
+	} = usePersonStore(state => state)
 
 	useEffect(() => {
-		window.addEventListener('scroll', throttle(scrollHandler, 500))
-		window.addEventListener('resize', throttle(scrollHandler, 500))
+		setIsFetching(true)
+		window.addEventListener('scroll', throttle(scrollHandler, 250))
+		window.addEventListener('resize', throttle(scrollHandler, 250))
+		setNewPersons()
+
 		return () => {
-			window.removeEventListener('scroll', throttle(scrollHandler, 500))
-			window.removeEventListener('resize', throttle(scrollHandler, 500))
+			window.removeEventListener('scroll', throttle(scrollHandler, 250))
+			window.removeEventListener('resize', throttle(scrollHandler, 250))
 		}
 	}, [])
 
-	function throttle(callee, timeout) {
-		let timer = null
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	function throttle(callee: Function, timeout: number) {
+		let timer: ReturnType<typeof setTimeout> | null = null
 
-		return function perform(...args) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		return function perform(...args: any) {
 			if (timer) return
 
 			timer = setTimeout(() => {
 				callee(...args)
-
-				clearTimeout(timer)
+				clearTimeout(timer as number)
 				timer = null
 			}, timeout)
 		}
 	}
 
-	async function scrollHandler() {
+	function scrollHandler() {
+		if (isFetching) return
 		const height = document.body.offsetHeight
 		const screenHeight = window.innerHeight
 		const scrolled = window.scrollY
 
-		const threshold = height - screenHeight / 3
+		const threshold = height - screenHeight / 8
 		const position = scrolled + screenHeight
 
 		if (position >= threshold) {
 			incPage()
-			await setPersons()
+			setPersons()
 		}
 	}
 

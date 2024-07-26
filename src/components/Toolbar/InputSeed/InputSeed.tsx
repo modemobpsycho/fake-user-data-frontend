@@ -1,16 +1,12 @@
 import Button from '@mui/material/Button'
 import ShuffleIcon from '@mui/icons-material/Shuffle'
 import { usePersonStore } from '../../../stores/personStore'
-import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { TextField } from '@mui/material'
 
 function InputSeed() {
-	const { seed, setSeed, setNewPersons } = usePersonStore(state => state)
+	const { seed, setSeed} = usePersonStore(state => state)
 
-	useEffect(() => {
-		setNewPersons()
-	}, [seed])
 
 	return (
 		<Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

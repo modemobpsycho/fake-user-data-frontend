@@ -27,10 +27,8 @@ interface PersonState {
 export const usePersonStore = create<PersonState>((set, get) => ({
 	persons: [],
 	setPersons: async () => {
-		if (get().isFetching || !get().shouldLoad) return
-
-		get().setIsFetching(true)
 		try {
+			get().setIsFetching(true)
 			const { data } = await axios.get(constants.API_URL + '/users', {
 				params: {
 					locale: get().region,
@@ -44,7 +42,6 @@ export const usePersonStore = create<PersonState>((set, get) => ({
 				persons: state.persons.concat(data),
 				personsMistakes: state.personsMistakes.concat(data),
 			}))
-
 			get().setIsFetching(false)
 		} catch (error) {
 			alert(error)
@@ -69,8 +66,10 @@ export const usePersonStore = create<PersonState>((set, get) => ({
 
 				tempArr = tempArr.concat(data)
 				get().incPage()
+				console.log('+++' + get().page)
 			}
 			set({ persons: tempArr, personsMistakes: tempArr })
+			get().setIsFetching(false)
 		} catch (error) {
 			alert(error)
 		}
@@ -130,11 +129,13 @@ export const usePersonStore = create<PersonState>((set, get) => ({
 
 		localStorage.setItem(constants.SEED, clampedSeed.toString())
 		set({ seed: clampedSeed })
+		get().setNewPersons()
 	},
 	region: localStorage.getItem(constants.REGION) || 'en',
 	setRegion: (region: string) => {
 		localStorage.setItem(constants.REGION, region)
 		set({ region: region })
+		get().setNewPersons()
 	},
 	mistakesNum: Number(localStorage.getItem(constants.MISTAKES_NUM)) || 0,
 	setMistakesNum: (mistakesNum: number) => {
