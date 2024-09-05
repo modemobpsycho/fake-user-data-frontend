@@ -15,21 +15,29 @@
 
 ## Project review
 
-### - Home page
+### - Main page
 
-![image](https://github.com/user-attachments/assets/5f37bbe5-3e53-4791-84c8-7c75b8c9d275)
+![image](https://github.com/user-attachments/assets/8045a3e3-a9e0-40e8-88b1-d23363c4853e)
 
-### - Boards page
+### - Different countries
 
-![image](https://github.com/user-attachments/assets/bc35c623-8dbb-47db-8c80-5e25c4e19eb1)
+![image](https://github.com/user-attachments/assets/1e2a9395-e0ed-4e5d-b7d1-5f85ce464017)
 
-### - Canvas
+### - Setting the value of errors in words
 
-![image](https://github.com/user-attachments/assets/b9b39b16-5b64-40bf-a8de-4e88c09fce72)
+![image](https://github.com/user-attachments/assets/12c8358e-3550-4b84-9180-a9a124271192)
+
+### - Managing seed
+
+![image](https://github.com/user-attachments/assets/91cc6b5f-9a10-4892-a4ad-a8d831df5fda)
+
+### - Exporting to csv
+
+![image](https://github.com/user-attachments/assets/361ce94f-1fa3-405e-8dd5-24a19a38771d)
 
 ## About The Project
 
-Paint Online is a web-application for the fake user data generation. There are 4 countries available, setting the value of errors in words, managing seed, exporting the table to csv.
+Faker is a web-application for the fake user data generation. There are 4 countries available, setting the value of errors in words, managing seed, exporting the table to csv.
 
 ## Used technologies
 
